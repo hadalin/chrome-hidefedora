@@ -1,0 +1,29 @@
+{
+  "name": "Hide Fedora",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Removes fedora youtube commenters.",
+  "homepage_url": "http://www.github.com/hadalin/hidefedora",
+  "icons": {
+    "48": "icons/icon48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://apis.google.com/*",
+        "*://plus.googleapis.com/*",
+        "*://*.githubusercontent.com/hadalin/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "js/jquery/jquery.min.js",
+        "js/underscore/underscore.js",
+        "src/content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "resources/*"
+  ]
+}
