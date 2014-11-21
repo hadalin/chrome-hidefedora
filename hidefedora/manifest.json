@@ -1,6 +1,6 @@
 {
   "name": "Hide Fedora",
-  "version": "0.1",
+  "version": "0.2",
   "manifest_version": 2,
   "description": "Removes fedora youtube commenters.",
   "homepage_url": "http://www.github.com/hadalin/chrome-hidefedora",
@@ -10,12 +10,10 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.youtube.com/*",
-        "*://apis.google.com/*",
-        "*://plus.googleapis.com/*",
-        "*://*.githubusercontent.com/hadalin/*"
+        "*://plus.googleapis.com/*"
       ],
       "all_frames": true,
+      "run_at": "document_end",
       "js": [
         "js/jquery/jquery.min.js",
         "js/underscore/underscore.js",
