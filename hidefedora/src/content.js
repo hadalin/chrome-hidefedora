@@ -26,10 +26,11 @@ $.getJSON("https://raw.githubusercontent.com/hadalin/chrome-hidefedora/master/hi
 
 $(function() {
 
-	setInterval(function() {
+	var interval = setInterval(function() {
 		if(resource !== null) {
 			removeFedora(".Yp.yt.Xa", ".ve.oba.HPa > a");
 			removeFedora(".Ik.Wv", ".fR > a");
+			clearInterval(interval);
 		}
 	}, 2000);
 
