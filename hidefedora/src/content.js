@@ -33,27 +33,30 @@ $.getJSON("https://raw.githubusercontent.com/hadalin/chrome-hidefedora/master/hi
 
 $(function() {
 
-	// Set MutationObserver
 	var target = document.querySelector('.yJa');
 	 
-	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-	var observer = new MutationObserver(function() {
-		execute();
-	});
-	 
-	var config = { childList: true, subtree: true };
-	 
-	observer.observe(target, config);
+	if(target !== null) {
 
-	// Execute removal a couple of times before MutationObserver kicks in
-	var counter = 0;
-	var interval = setInterval(function() {
-		execute();
+		// Set MutationObserver
+		var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+		var observer = new MutationObserver(function() {
+			execute();
+		});
+		 
+		var config = { childList: true, subtree: true };
+		 
+		observer.observe(target, config);
 
-    	counter++;
-    	if(counter === 8) {
-        	clearInterval(interval);
-    	}
-	}, 1000);
+		// Execute removal a couple of times before MutationObserver kicks in
+		var counter = 0;
+		var interval = setInterval(function() {
+			execute();
+
+	    	counter++;
+	    	if(counter === 8) {
+	        	clearInterval(interval);
+	    	}
+		}, 1000);
+	}
 
 });
