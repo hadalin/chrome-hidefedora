@@ -1,9 +1,15 @@
-var resource = null;
-var removalMethod = 'hide';
+var fedoras = [],
+	removalMethod = 'hide';
 
 chrome.storage.sync.get("removalMethod", function(items) {
 	if(_.has(items, "removalMethod")) {
 		removalMethod = items.removalMethod;
+	}
+});
+
+chrome.storage.local.get("fedoras", function(items) {
+	if(_.has(items, "fedoras")) {
+		fedoras = items.fedoras;
 	}
 });
 
@@ -17,7 +23,7 @@ var removeFedora = function(outerSelector, innerSelector) {
 			href = el.find(innerSelector).attr("href"),
 			thisEl = $(this);
 
-		if(typeof _.find(resource.fedoras, function(fedora) { return endsWith(href, fedora); }) !== "undefined") {
+		if(typeof _.find(fedoras, function(fedora) { return endsWith(href, fedora); }) !== "undefined") {
 
 			switch(removalMethod) {
 				// Hide
@@ -38,6 +44,7 @@ var removeFedora = function(outerSelector, innerSelector) {
 						el.find(".Ct").html("Meow meow");
 						el.find(".Uk.vKa")
 							.removeAttr('oid')
+							.attr("src", "")
 							.attr("src", "https://thecatapi.com/api/images/get?format=src&type=jpg&size=small&rnd=" + Math.floor(Math.random() * (1000 - 0)) + 0)
 							.parent()
 							.attr("href", "https://thecatapi.com/api/images/get");
@@ -52,19 +59,17 @@ var removeFedora = function(outerSelector, innerSelector) {
 };
 
 var execute = function() {
-	if(resource !== null) {
-		removeFedora(".Yp.yt.Xa", ".ve.oba.HPa > a");
-		removeFedora(".Ik.Wv", ".fR > a");
-	}
+	removeFedora(".Yp.yt.Xa", ".ve.oba.HPa > a");
+	removeFedora(".Ik.Wv", ".fR > a");
 };
 
 $.getJSON("https://raw.githubusercontent.com/hadalin/chrome-hidefedora/master/hidefedora/resources/fedoras.json", function(res) {
-	resource = res;
+	fedoras = res.fedoras;
+    chrome.storage.local.set({
+      fedoras: res.fedoras
+    });
 });
 
-// $.getJSON(chrome.extension.getURL("/resources/fedoras.json"), function(res) {
-// 	resource = res;
-// });
 
 $(function() {
 

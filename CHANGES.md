@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v0.9.3
+    * Blacklist is now also stored locally in case remote list is not available.
   * v0.9.2
     * Tiny improvement.
   * v0.9.1
