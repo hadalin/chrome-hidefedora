@@ -1,9 +1,8 @@
 function save_options() {
-  var color = document.getElementById('removal-method').value;
+  var removalMethod = document.getElementById('removal-method').value;
     chrome.storage.sync.set({
-      removalMethod: color
-    }, function() {
-  });
+      removalMethod: removalMethod
+    });
 }
 
 function restore_options() {
