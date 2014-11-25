@@ -1,8 +1,10 @@
 var resource = null;
-var removalMethod = null;
+var removalMethod = 'hide';
 
 chrome.storage.sync.get("removalMethod", function(items) {
-	removalMethod = items.removalMethod;
+	if(_.has(items, "removalMethod")) {
+		removalMethod = items.removalMethod;
+	}
 });
 
 var endsWith = function(str, suffix) {
@@ -11,41 +13,37 @@ var endsWith = function(str, suffix) {
 
 var removeFedora = function(outerSelector, innerSelector) {
 	$(outerSelector).each(function(index, element) {
-		var el = $(element);
-		var href = el.find(innerSelector).attr("href");
+		var href = $(element).find(innerSelector).attr("href");
 
 		if(typeof _.find(resource.fedoras, function(fedora) { 
 			return endsWith(href, fedora);
 		}) !== "undefined") {
+			switch(removalMethod) {
+				// Hide
+				case "hide":
+					$(this).remove();
+					break;
+				// Replace
+				case "replace-fedora-cat":
+					if(!$(this).hasClass("hide-fedora-tagged")) {
 
-			var thisEl = $(this);
+						$(this).addClass("hide-fedora-tagged");
 
-			if(!thisEl.hasClass("hide-fedora-tagged")) {
-
-				thisEl.addClass("hide-fedora-tagged");
-
-				switch(removalMethod) {
-					// Hide
-					case "hide":
-						thisEl.remove();
-						break;
-					// Replace
-					case "replace-fedora-cat":
-						el.find(".Ub.gna")
+						$(element).find(".Ub.gna")
 							.html("Fedora replaced with Cat")
 							.parent()
 							.removeAttr('oid')
 							.attr("href", "https://thecatapi.com/api/images/get");
-						el.find(".Ct").html("Meow meow");
-						el.find(".Uk.vKa")
+						$(element).find(".Ct").html("Meow meow");
+						$(element).find(".Uk.vKa")
 							.removeAttr('oid')
 							.attr("src", "https://thecatapi.com/api/images/get?format=src&type=jpg&size=small&rnd=" + Math.floor(Math.random() * (1000 - 0)) + 0)
 							.parent()
 							.attr("href", "https://thecatapi.com/api/images/get");
-						el.find(".REa.Sea").remove();
-						el.find(".Cx.fr").remove();
-						break;
-				}
+						$(element).find(".REa.Sea").remove();
+						$(element).find(".Cx.fr").remove();
+					}
+					break;
 			}
 		}
 	});
