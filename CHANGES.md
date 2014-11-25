@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v0.9.2
+    * Tiny improvement.
   * v0.9.1
     * Bugfix.
   * v0.9
