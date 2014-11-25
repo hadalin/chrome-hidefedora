@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v0.9
+    * Added options page.
   * v0.8.2
     * Fixed minor bug.
   * v0.8

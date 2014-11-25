@@ -1,4 +1,9 @@
 var resource = null;
+var removalMethod = null;
+
+chrome.storage.sync.get("removalMethod", function(items) {
+	removalMethod = items.removalMethod;
+});
 
 var endsWith = function(str, suffix) {
 	return str.indexOf(suffix, str.length - suffix.length) !== -1;
@@ -6,12 +11,42 @@ var endsWith = function(str, suffix) {
 
 var removeFedora = function(outerSelector, innerSelector) {
 	$(outerSelector).each(function(index, element) {
-		var href = $(element).find(innerSelector).attr("href");
+		var el = $(element);
+		var href = el.find(innerSelector).attr("href");
 
 		if(typeof _.find(resource.fedoras, function(fedora) { 
 			return endsWith(href, fedora);
 		}) !== "undefined") {
-			$(this).remove();
+
+			var thisEl = $(this);
+
+			if(!thisEl.hasClass("hide-fedora-tagged")) {
+
+				thisEl.addClass("hide-fedora-tagged");
+
+				switch(removalMethod) {
+					// Hide
+					case "hide":
+						thisEl.remove();
+						break;
+					// Replace
+					case "replace-fedora-cat":
+						el.find(".Ub.gna")
+							.html("Fedora replaced with Cat")
+							.parent()
+							.removeAttr('oid')
+							.attr("href", "https://thecatapi.com/api/images/get");
+						el.find(".Ct").html("Meow meow");
+						el.find(".Uk.vKa")
+							.removeAttr('oid')
+							.attr("src", "https://thecatapi.com/api/images/get?format=src&type=jpg&size=small&rnd=" + Math.floor(Math.random() * (1000 - 0)) + 0)
+							.parent()
+							.attr("href", "https://thecatapi.com/api/images/get");
+						el.find(".REa.Sea").remove();
+						el.find(".Cx.fr").remove();
+						break;
+				}
+			}
 		}
 	});
 };
