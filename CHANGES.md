@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v0.9.5
+    * Added footer to options page.
   * v0.9.4
     * Option to replace fedoras with cat pictures now shows cats waring hats. Also cat pictures are stored locally.
   * v0.9.3
