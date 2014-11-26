@@ -17,6 +17,10 @@ var endsWith = function(str, suffix) {
 	return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
 
+var randomInt = function(min, max) {
+    return Math.floor(Math.random()*(max-min+1)+min);
+};
+
 var removeFedora = function(outerSelector, innerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
@@ -36,19 +40,26 @@ var removeFedora = function(outerSelector, innerSelector) {
 
 						$(this).addClass("hide-fedora-tagged");
 
+						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
+
+						// Title
 						el.find(".Ub.gna")
 							.html("Fedora replaced with a cat")
 							.parent()
 							.removeAttr('oid')
-							.attr("href", "https://thecatapi.com/api/images/get");
+							.attr("href", fileUrl);
+						// Text
 						el.find(".Ct").html("Meow meow");
+						// Img
 						el.find(".Uk.vKa")
 							.removeAttr('oid')
 							.attr("src", "")
-							.attr("src", "https://thecatapi.com/api/images/get?format=src&type=jpg&size=small&rnd=" + Math.floor(Math.random() * (1000 - 0)) + 0)
+							.attr("src", fileUrl)
 							.parent()
-							.attr("href", "https://thecatapi.com/api/images/get");
+							.attr("href", fileUrl);
+						// Controls
 						el.find(".REa.Sea").remove();
+						// Replies
 						el.find(".Cx.fr").remove();
 					}
 					break;
