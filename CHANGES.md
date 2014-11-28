@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.0
+    * Fetching list of fedora profiles from an outside source.
   * v0.9.5
     * Added footer to options page.
   * v0.9.4
