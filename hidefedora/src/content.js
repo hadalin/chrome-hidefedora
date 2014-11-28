@@ -33,7 +33,7 @@ var submitReport = function(profileId) {
 };
 
 var onReportClick = function(e) {
-	$(this).prop('disabled', true);
+	$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
 	submitReport($(this).attr("profileId"));
 };
 

@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.4
+    * Styled report button.
   * v1.3
     * Added option to hide report button.
   * v1.2
