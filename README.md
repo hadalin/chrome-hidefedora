@@ -1,7 +1,9 @@
-Chrome extension that removes fedora youtube commenters.
+# Hide Fedora
 
-Profile IDs are stored in ```hidefedora/resources/fedoras.json```
+**Chrome extension that removes fedora youtube commenters.**
 
-Extenstion available at [https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde](https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde)
+Profile IDs are stored in ```hidefedora/resources/fedoras.json```. Would be nice to move the blacklist somewhere outside the source.
 
-There's also Firefox version [https://addons.mozilla.org/en-US/firefox/addon/hide-fedora/](https://addons.mozilla.org/en-US/firefox/addon/hide-fedora/)
+Extenstion available at [https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde](https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde).
+
+There's also a **Firefox** version [https://addons.mozilla.org/en-US/firefox/addon/hide-fedora/](https://addons.mozilla.org/en-US/firefox/addon/hide-fedora/)
