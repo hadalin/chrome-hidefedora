@@ -74,7 +74,7 @@ var execute = function() {
 	removeFedora(".Ik.Wv", ".fR > a");
 };
 
-$.getJSON("https://raw.githubusercontent.com/hadalin/chrome-hidefedora/master/hidefedora/resources/fedoras.json", function(res) {
+$.getJSON("https://jhvisser.com/hidefedora/getJSON.php", function(res) {
 	fedoras = res.fedoras;
     chrome.storage.local.set({
       fedoras: res.fedoras
