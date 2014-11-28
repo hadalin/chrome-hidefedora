@@ -13,25 +13,33 @@ chrome.storage.local.get("fedoras", function(items) {
 	}
 });
 
-var addNotice = function() {
-	$('.VW.Bn').before('<div class="hide-fedora-notice" style="margin-bottom: 20px; font-weight: bold; border: 1px solid #999; padding: 5px"><a href="https://jhvisser.com/hidefedora/">Submit Reddit Armie profiles</a></div>');
-};
-
-var endsWith = function(str, suffix) {
-	return str.indexOf(suffix, str.length - suffix.length) !== -1;
-};
-
 var randomInt = function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
 };
 
-var removeFedora = function(outerSelector, innerSelector) {
+var submitReport = function(profileId) {
+	$.ajax({
+		url: 'https://jhvisser.com/hidefedora/index.php',
+		type: 'POST',
+		data: {
+			submit: 1,
+			profileUrl: profileId
+		}
+	});
+};
+
+var onReportClick = function(e) {
+	$(this).prop('disabled', true);
+	submitReport($(this).attr("profileId"));
+};
+
+var process = function(outerSelector, innerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
-			href = el.find(innerSelector).attr("href"),
+			profileId = el.find('[oid]').first().attr('oid');
 			thisEl = $(this);
 
-		if(typeof _.find(fedoras, function(fedora) { return endsWith(href, fedora); }) !== "undefined") {
+		if(_.contains(fedoras, profileId)) {
 
 			switch(removalMethod) {
 				// Hide
@@ -40,9 +48,9 @@ var removeFedora = function(outerSelector, innerSelector) {
 					break;
 				// Replace
 				case "replace-fedora-cat":
-					if(!thisEl.hasClass("hide-fedora-tagged")) {
+					if(!thisEl.hasClass("hide-fedora-found")) {
 
-						$(this).addClass("hide-fedora-tagged");
+						thisEl.addClass("hide-fedora-found");
 
 						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
@@ -70,12 +78,24 @@ var removeFedora = function(outerSelector, innerSelector) {
 			}
 
 		}
+		else {
+			if(!thisEl.hasClass("hide-fedora-tagged")) {
+
+				thisEl.addClass("hide-fedora-tagged");
+				thisEl
+					.find('.RN.f8b')
+					.first()
+					.after('<button type="button" profileId="' + profileId + '" class="hide-fedora-report-btn">Report Reddit Armie</button>');
+
+				thisEl.find('.hide-fedora-report-btn').click(onReportClick);
+			}
+		}
 	});
 };
 
 var execute = function() {
-	removeFedora(".Yp.yt.Xa", ".ve.oba.HPa > a");
-	removeFedora(".Ik.Wv", ".fR > a");
+	process(".Yp.yt.Xa", ".ve.oba.HPa > a");
+	process(".Ik.Wv", ".fR > a");
 };
 
 $.getJSON("https://jhvisser.com/hidefedora/getJSON.php", function(res) {
@@ -87,8 +107,6 @@ $.getJSON("https://jhvisser.com/hidefedora/getJSON.php", function(res) {
 
 
 $(function() {
-
-	addNotice();
 
 	var target = document.querySelector('.yJa');
 	 

@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.2
+    * Add 'Report Reddit Armie' button
   * v1.1
     * Embed 'Submit Reddit Armie profile' notice.
   * v1.0
