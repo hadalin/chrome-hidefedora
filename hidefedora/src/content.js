@@ -13,6 +13,10 @@ chrome.storage.local.get("fedoras", function(items) {
 	}
 });
 
+var addNotice = function() {
+	$('.VW.Bn').before('<div class="hide-fedora-notice" style="margin-bottom: 20px; font-weight: bold; border: 1px solid #999; padding: 5px"><a href="https://jhvisser.com/hidefedora/">Submit Reddit Armie profiles</a></div>');
+};
+
 var endsWith = function(str, suffix) {
 	return str.indexOf(suffix, str.length - suffix.length) !== -1;
 };
@@ -83,6 +87,8 @@ $.getJSON("https://jhvisser.com/hidefedora/getJSON.php", function(res) {
 
 
 $(function() {
+
+	addNotice();
 
 	var target = document.querySelector('.yJa');
 	 
