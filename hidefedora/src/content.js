@@ -1,9 +1,13 @@
 var fedoras = [],
-	removalMethod = 'hide';
+	removalMethod = 'hide',
+	showReportButton = true;
 
-chrome.storage.sync.get("removalMethod", function(items) {
+chrome.storage.sync.get(["removalMethod", "showReportButton"], function(items) {
 	if(_.has(items, "removalMethod")) {
 		removalMethod = items.removalMethod;
+	}
+	if(_.has(items, "showReportButton")) {
+		showReportButton = items.showReportButton;
 	}
 });
 
@@ -79,15 +83,17 @@ var process = function(outerSelector, innerSelector) {
 
 		}
 		else {
-			if(!thisEl.hasClass("hide-fedora-tagged")) {
+			if(showReportButton) {
+				if(!thisEl.hasClass("hide-fedora-tagged")) {
 
-				thisEl.addClass("hide-fedora-tagged");
-				thisEl
-					.find('.RN.f8b')
-					.first()
-					.after('<button type="button" profileId="' + profileId + '" class="hide-fedora-report-btn">Report Reddit Armie</button>');
+					thisEl.addClass("hide-fedora-tagged");
+					thisEl
+						.find('.RN.f8b')
+						.first()
+						.after('<button type="button" profileId="' + profileId + '" class="hide-fedora-report-btn">Report Reddit Armie</button>');
 
-				thisEl.find('.hide-fedora-report-btn').click(onReportClick);
+					thisEl.find('.hide-fedora-report-btn').click(onReportClick);
+				}
 			}
 		}
 	});

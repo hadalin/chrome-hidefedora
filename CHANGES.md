@@ -3,10 +3,12 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.3
+    * Added option to hide report button.
   * v1.2
-    * Add 'Report Reddit Armie' button
+    * Added 'Report Reddit Armie' button.
   * v1.1
-    * Embed 'Submit Reddit Armie profile' notice.
+    * Embedded 'Submit Reddit Armie profile' notice.
   * v1.0
     * Fetching list of fedora profiles from an outside source.
   * v0.9.5
