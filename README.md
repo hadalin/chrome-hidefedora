@@ -2,7 +2,7 @@
 
 **Chrome extension that removes fedora Youtube commenters.**
 
-Profile IDs are stored in ```hidefedora/resources/fedoras.json```. Would be nice to move the blacklist somewhere outside the source.
+Backend provided by https://github.com/Fogest/hidefedora-web
 
 Extension available at [https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde](https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde).
 

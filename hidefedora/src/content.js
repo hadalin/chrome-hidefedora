@@ -1,9 +1,13 @@
 var fedoras = [],
-	removalMethod = 'hide';
+	removalMethod = 'hide',
+	showReportButton = true;
 
-chrome.storage.sync.get("removalMethod", function(items) {
+chrome.storage.sync.get(["removalMethod", "showReportButton"], function(items) {
 	if(_.has(items, "removalMethod")) {
 		removalMethod = items.removalMethod;
+	}
+	if(_.has(items, "showReportButton")) {
+		showReportButton = items.showReportButton;
 	}
 });
 
@@ -13,21 +17,35 @@ chrome.storage.local.get("fedoras", function(items) {
 	}
 });
 
-var endsWith = function(str, suffix) {
-	return str.indexOf(suffix, str.length - suffix.length) !== -1;
-};
-
 var randomInt = function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
 };
 
-var removeFedora = function(outerSelector, innerSelector) {
+var submitReport = function(profileId, comment) {
+	$.ajax({
+		url: 'https://jhvisser.com/hidefedora/index.php',
+		type: 'POST',
+		data: {
+			submit: 1,
+			profileUrl: profileId,
+			comment: comment
+		}
+	});
+};
+
+var onReportClick = function(e) {
+	$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
+	submitReport($(this).data("profileId"), $(this).data("comment"));
+};
+
+var process = function(outerSelector, innerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
-			href = el.find(innerSelector).attr("href"),
+			profileId = el.find('[oid]').first().attr('oid'),
+			comment = el.find('div.Ct').first().text(),
 			thisEl = $(this);
 
-		if(typeof _.find(fedoras, function(fedora) { return endsWith(href, fedora); }) !== "undefined") {
+		if(_.contains(fedoras, profileId)) {
 
 			switch(removalMethod) {
 				// Hide
@@ -36,9 +54,9 @@ var removeFedora = function(outerSelector, innerSelector) {
 					break;
 				// Replace
 				case "replace-fedora-cat":
-					if(!thisEl.hasClass("hide-fedora-tagged")) {
+					if(!thisEl.hasClass("hide-fedora-found")) {
 
-						$(this).addClass("hide-fedora-tagged");
+						thisEl.addClass("hide-fedora-found");
 
 						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
@@ -66,15 +84,32 @@ var removeFedora = function(outerSelector, innerSelector) {
 			}
 
 		}
+		else {
+			if(showReportButton) {
+				if(!thisEl.hasClass("hide-fedora-tagged")) {
+
+					thisEl.addClass("hide-fedora-tagged");
+					thisEl
+						.find('.RN.f8b')
+						.first()
+						.after('<button type="button" class="hide-fedora-report-btn">Report Reddit Armie</button>');
+
+					thisEl.find('.hide-fedora-report-btn')
+						.data('profileId', profileId)
+						.data('comment', comment)
+						.click(onReportClick);
+				}
+			}
+		}
 	});
 };
 
 var execute = function() {
-	removeFedora(".Yp.yt.Xa", ".ve.oba.HPa > a");
-	removeFedora(".Ik.Wv", ".fR > a");
+	process(".Yp.yt.Xa", ".ve.oba.HPa > a");
+	process(".Ik.Wv", ".fR > a");
 };
 
-$.getJSON("https://raw.githubusercontent.com/hadalin/chrome-hidefedora/master/hidefedora/resources/fedoras.json", function(res) {
+$.getJSON("https://jhvisser.com/hidefedora/getJSON.php", function(res) {
 	fedoras = res.fedoras;
     chrome.storage.local.set({
       fedoras: res.fedoras
