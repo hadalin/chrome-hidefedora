@@ -35,15 +35,15 @@ var submitReport = function(profileId, comment) {
 
 var onReportClick = function(e) {
 	$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
-	submitReport($(this).attr("profileId"),$(this).attr("comment"));
+	submitReport($(this).data("profileId"), $(this).data("comment"));
 };
 
 var process = function(outerSelector, innerSelector) {
 	$(outerSelector).each(function(index, element) {
-		var el = $(element);
-		var profileId = el.find('[oid]').first().attr('oid');
-		var comment = el.find('div.Ct').first().text();
-		var thisEl = $(this);
+		var el = $(element),
+			profileId = el.find('[oid]').first().attr('oid'),
+			comment = el.find('div.Ct').first().text(),
+			thisEl = $(this);
 
 		if(_.contains(fedoras, profileId)) {
 
@@ -92,9 +92,12 @@ var process = function(outerSelector, innerSelector) {
 					thisEl
 						.find('.RN.f8b')
 						.first()
-						.after('<button type="button" comment="' + comment + '" profileId="' + profileId + '" class="hide-fedora-report-btn">Report Reddit Armie</button>');
+						.after('<button type="button" class="hide-fedora-report-btn">Report Reddit Armie</button>');
 
-					thisEl.find('.hide-fedora-report-btn').click(onReportClick);
+					thisEl.find('.hide-fedora-report-btn')
+						.data('profileId', profileId)
+						.data('comment', comment)
+						.click(onReportClick);
 				}
 			}
 		}
