@@ -1,6 +1,7 @@
 .hide-fedora-report-btn {
 	background-color: white;
 	display: inline-block;
+	visibility: hidden;
 	height: 17px;
 	border: 1px solid #999;
 	color: #999;
@@ -17,6 +18,11 @@
 	vertical-align: middle;
 	cursor: pointer;
 	border-radius: 2px;
+}
+
+.ve.oba.HPa:hover .hide-fedora-report-btn,
+.Wi.lg.via:hover .hide-fedora-report-btn {
+	visibility: visible;
 }
 
 .hide-fedora-reported {
