@@ -1,13 +1,17 @@
 var fedoras = [],
 	removalMethod = 'hide',
-	showReportButton = true;
+	showReportButton = true,
+	banned = [];
 
-chrome.storage.sync.get(["removalMethod", "showReportButton"], function(items) {
+chrome.storage.sync.get(["removalMethod", "showReportButton", "banned"], function(items) {
 	if(_.has(items, "removalMethod")) {
 		removalMethod = items.removalMethod;
 	}
 	if(_.has(items, "showReportButton")) {
 		showReportButton = items.showReportButton;
+	}
+	if(_.has(items, "banned")) {
+		banned = items.banned;
 	}
 });
 
@@ -19,6 +23,20 @@ chrome.storage.local.get("fedoras", function(items) {
 
 var randomInt = function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
+};
+
+var localBan = function(profileId) {
+	if(!_.contains(banned, profileId)) {
+		chrome.storage.sync.get("banned", function(items) {
+			if(_.has(items, "banned")) {
+				banned = items.banned;
+			}
+			banned.push(profileId);
+		    chrome.storage.sync.set({
+		      banned: banned
+		    });
+		});
+	}
 };
 
 var submitReport = function(profileId, comment) {
@@ -34,8 +52,17 @@ var submitReport = function(profileId, comment) {
 };
 
 var onReportClick = function(e) {
+	var profileId = $(this).data("profileId"),
+		comment = $(this).data("comment");
+
+	localBan(profileId);
+	submitReport(profileId, comment);
+
 	$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
-	submitReport($(this).data("profileId"), $(this).data("comment"));
+
+	setTimeout(function() {
+		execute();
+	}, 1000);
 };
 
 var process = function(outerSelector, innerSelector) {
@@ -45,7 +72,7 @@ var process = function(outerSelector, innerSelector) {
 			comment = el.find('div.Ct').first().text(),
 			thisEl = $(this);
 
-		if(_.contains(fedoras, profileId)) {
+		if(_.contains(fedoras, profileId) || _.contains(banned, profileId)) {
 
 			switch(removalMethod) {
 				// Hide
@@ -62,7 +89,7 @@ var process = function(outerSelector, innerSelector) {
 
 						// Title
 						el.find(".Ub.gna")
-							.html("Fedora replaced with a cat")
+							.html("Replaced with a cat")
 							.parent()
 							.removeAttr('oid')
 							.attr("href", fileUrl);
@@ -92,7 +119,7 @@ var process = function(outerSelector, innerSelector) {
 					thisEl
 						.find('.RN.f8b')
 						.first()
-						.after('<button type="button" class="hide-fedora-report-btn">Report Reddit Armie</button>');
+						.after('<button type="button" class="hide-fedora-report-btn">Report &amp; Ban</button>');
 
 					thisEl.find('.hide-fedora-report-btn')
 						.data('profileId', profileId)

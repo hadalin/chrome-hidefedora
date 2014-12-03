@@ -8,12 +8,29 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+.page-header {
+  margin-bottom: 30px;
+}
+
+.tab-content {
+  padding-top: 20px;
+  padding-left: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
 #removal-method {
 	width: 240px;
 }
 
 .container .text-muted {
   margin: 20px 0;
+}
+
+#empty-notice {
+  display: none;
 }
 
 .footer {

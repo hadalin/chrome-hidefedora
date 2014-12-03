@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.5.0
+    * Reporting a profile now also bans it. Use options page to unban profiles.
   * v1.4.3
     * Show report button on hover.
   * v1.4.2
