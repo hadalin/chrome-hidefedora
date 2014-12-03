@@ -2,8 +2,11 @@
 <html>
 <head><title>Hide Fedora Options</title></head>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="options.css">
+<script src="/assets/underscore/underscore.js"></script>
+<script src="/assets/jquery/jquery.min.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <body>
 
 	<div class="container">
@@ -19,28 +22,65 @@
 		<div class="row">
 			<div class="col-xs-12">
 
-				<form role="form">
-					<div class="form-group">
+				<div role="tabpanel">
 
-				    	<label for="removal-method">Fedora removal method</label>
-						<select id="removal-method" class="form-control">
-			 				<option value="hide">Hide (default)</option>
-			 				<option value="replace-fedora-cat">Replace fedora with a cat</option>
-						</select>
+					<ul class="nav nav-tabs" role="tablist">
+				    	<li role="presentation" class="active"><a href="#options" aria-controls="options" role="tab" data-toggle="tab">Options</a></li>
+						<li role="presentation"><a href="#banned" aria-controls="banned" role="tab" data-toggle="tab">Banned</a></li>
+					</ul>
 
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="options">
+							
+							<form role="form">
+								<div class="form-group">
+
+							    	<label for="removal-method">Fedora removal method</label>
+									<select id="removal-method" class="form-control">
+						 				<option value="hide">Hide (default)</option>
+						 				<option value="replace-fedora-cat">Replace fedora with a cat</option>
+									</select>
+
+								</div>
+
+								<div class="form-group">
+
+							    	<label for="show-report-button">Show 'Report &amp; Ban' button</label><br />
+							    	<input type="checkbox" id="show-report-button">
+
+								</div>
+
+							</form>
+
+						</div>
+
+
+						<div role="tabpanel" class="tab-pane" id="banned">
+							<table class="table table-hover table-condensed banned-table">
+								<thead>
+									<tr>
+										<th>Profile</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+
+							<span id="empty-notice"><em>No banned profiles.</em></span>
+
+							<hr />
+
+							<p class="pull-right"><small>Locally banned profiles. Profiles added to the Hide Fedora blacklist will still be removed.</small></p>
+
+						</div>
 					</div>
 
-					<div class="form-group">
-
-				    	<label for="show-report-button">Show 'Report Reddit Armie' button</label><br />
-				    	<input type="checkbox" id="show-report-button">
-
-					</div>
-
-				</form>
+				</div>
 
 			</div>
 		</div>
+
 
 	</div>
 

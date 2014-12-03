@@ -33,3 +33,35 @@ function restore_options() {
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('removal-method').addEventListener('change', save_removal_method);
 document.getElementById('show-report-button').addEventListener('change', save_show_report_button);
+
+
+$(function() {
+
+  var banned = [];
+  chrome.storage.sync.get("banned", function(items) {
+    if(_.has(items, "banned")) {
+      banned = items.banned;
+    }
+
+    if(banned.length > 0) {
+      _.each(banned, function(value) {
+        $('.banned-table > tbody:last').append('<tr><td><a href="https://plus.google.com/' + value + '" target="_blank">plus.google.com/' + value + '</a></td><td><button data-profileid="' + value + '" type="button" class="btn btn-success btn-sm unban-btn">Unban</button></td></tr>');
+      });
+
+      $('.unban-btn').click(function() {
+        banned = _.without(banned, $(this).attr('data-profileid'));
+
+        chrome.storage.sync.set({
+          banned: banned
+        });
+
+        $(this).closest('tr').hide('slow');
+      });
+    }
+    else {
+      $('.banned-table').hide();
+      $('#empty-notice').show();
+    }
+  });
+
+});
