@@ -35,6 +35,12 @@ document.getElementById('removal-method').addEventListener('change', save_remova
 document.getElementById('show-report-button').addEventListener('change', save_show_report_button);
 
 
+var hideTable = function() {
+  $('.banned-table').hide();
+  $('.ban-all-container').hide();
+  $('#empty-notice').show('fast');
+};
+
 $(function() {
 
   var banned = [];
@@ -55,12 +61,28 @@ $(function() {
           banned: banned
         });
 
-        $(this).closest('tr').hide('slow');
+        if(banned.length > 0) {
+          $(this).closest('tr').hide('slow');
+        }
+        else {
+          hideTable();
+        }
+
       });
+
+      $('.unban-all-btn').click(function() {
+        if(confirm('You sure?')) {
+          chrome.storage.sync.set({
+            banned: []
+          });
+
+          hideTable();
+        }
+      });
+
     }
     else {
-      $('.banned-table').hide();
-      $('#empty-notice').show();
+      hideTable();
     }
   });
 

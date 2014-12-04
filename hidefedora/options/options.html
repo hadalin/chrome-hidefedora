@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head><title>Hide Fedora Options</title></head>
+<head><title>Hide Fedora Options</title>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="options.css">
 <script src="/assets/underscore/underscore.js"></script>
 <script src="/assets/jquery/jquery.min.js"></script>
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+</head>
 <body>
 
 	<div class="container">
@@ -56,22 +57,43 @@
 
 
 						<div role="tabpanel" class="tab-pane" id="banned">
-							<table class="table table-hover table-condensed banned-table">
-								<thead>
-									<tr>
-										<th>Profile</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
 
-							<span id="empty-notice"><em>No banned profiles.</em></span>
+							<div class="row ban-all-container">
+								<div class="col-xs-12">
+
+									<div class="pull-right"><button type="button" class="btn btn-default btn-xs unban-all-btn">Unban All</button></div>
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12">
+
+									<table class="table table-hover table-condensed banned-table">
+										<thead>
+											<tr>
+												<th>Profile</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+
+									<span id="empty-notice"><em>No banned profiles.</em></span>
+
+								</div>
+							</div>
 
 							<hr />
 
-							<p class="pull-right"><small>Locally banned profiles. Profiles added to the Hide Fedora blacklist will still be removed.</small></p>
+							<div class="row">
+								<div class="col-xs-12">
+
+									<p class="pull-right"><small>Locally banned profiles. Profiles added to the Hide Fedora blacklist will still be removed.</small></p>
+
+								</div>
+							</div>
 
 						</div>
 					</div>
@@ -86,7 +108,7 @@
 
 	<footer class="footer">
 		<div class="container">
-			<p class="text-muted"><a href="https://github.com/hadalin/chrome-hidefedora">Source code on GitHub</a> &bull; <a href="https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde">Chrome Web Store listing</a></p>
+			<p class="text-muted"><a href="https://github.com/hadalin/chrome-hidefedora">Source code on GitHub</a> &bull; <a href="https://chrome.google.com/webstore/detail/hide-fedora/acjgabfifnnmmlckmnijdbijgbfpedde">Chrome Web Store listing</a> &bull; <small>Accepting Bitcoin donations because servers <strong>1BJfBK8LW8L2PcxQerorc61JGoUdguqxrG</strong></small></p>
 		</div>
 	</footer>
 
