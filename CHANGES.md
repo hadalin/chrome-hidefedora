@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.5.2
+    * Minor tweak on options page.
   * v1.5.1
     * Added an option to unban all profiles.
   * v1.5.0
