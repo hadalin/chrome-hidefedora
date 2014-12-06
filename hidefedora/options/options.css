@@ -29,8 +29,12 @@ body {
   margin: 20px 0;
 }
 
-#empty-notice {
+.empty-notice {
   display: none;
+}
+
+#bannedWords .empty-notice {
+  margin-bottom: 20px
 }
 
 .footer {

@@ -1,9 +1,10 @@
 var fedoras = [],
 	removalMethod = 'hide',
 	showReportButton = true,
-	banned = [];
+	banned = [],
+	bannedWords = [];
 
-chrome.storage.sync.get(["removalMethod", "showReportButton", "banned"], function(items) {
+chrome.storage.sync.get(["removalMethod", "showReportButton", "banned", "bannedWords"], function(items) {
 	if(_.has(items, "removalMethod")) {
 		removalMethod = items.removalMethod;
 	}
@@ -12,6 +13,9 @@ chrome.storage.sync.get(["removalMethod", "showReportButton", "banned"], functio
 	}
 	if(_.has(items, "banned")) {
 		banned = items.banned;
+	}
+	if(_.has(items, "bannedWords")) {
+		bannedWords = items.bannedWords;
 	}
 });
 
@@ -72,7 +76,11 @@ var process = function(outerSelector, innerSelector) {
 			comment = el.find('div.Ct').first().text(),
 			thisEl = $(this);
 
-		if(_.contains(fedoras, profileId) || _.contains(banned, profileId)) {
+		if(_.contains(fedoras, profileId) || 
+			_.contains(banned, profileId) || 
+			_.some(bannedWords, function(word) { 
+				return comment.toLowerCase().indexOf(word.toLowerCase()) > -1; 
+			})) {
 
 			switch(removalMethod) {
 				// Hide
@@ -128,6 +136,7 @@ var process = function(outerSelector, innerSelector) {
 				}
 			}
 		}
+
 	});
 };
 
