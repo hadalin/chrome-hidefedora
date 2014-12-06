@@ -35,15 +35,54 @@ document.getElementById('removal-method').addEventListener('change', save_remova
 document.getElementById('show-report-button').addEventListener('change', save_show_report_button);
 
 
-var hideTable = function() {
-  $('.banned-table').hide();
-  $('.ban-all-container').hide();
-  $('#empty-notice').show('fast');
+
+var banned = [],
+    bannedWords = [];
+
+var hideProfilesTable = function() {
+  $('#banned .banned-table').hide();
+  $('#banned .unban-all-container').hide();
+  $('#banned .empty-notice').show('fast');
+};
+
+var showWordsTable = function() {
+  $('#bannedWords .bannedWords-table').show('fast');
+  $('#bannedWords .unban-all-container').show();
+  $('#bannedWords .empty-notice').hide();
+};
+
+var hideWordsTable = function() {
+  $('#bannedWords .bannedWords-table').hide();
+  $('#bannedWords .unban-all-container').hide();
+  $('#bannedWords .empty-notice').show('fast');
+};
+
+var addWordTableRow = function(word) {
+  var tbody = $('#bannedWords .bannedWords-table > tbody:last').append('<tr><td> ' + word + ' </td><td><button type="button" class="btn btn-success btn-sm unban-word-btn">Unban</button></td></tr>'),
+      lastBtn = tbody.find('tr:last .unban-word-btn');
+
+  lastBtn.data('word', word);
+
+  lastBtn.click(function() {
+    var word = $(this).data('word');
+    bannedWords = _.without(bannedWords, word);
+
+    chrome.storage.sync.set({
+      bannedWords: bannedWords
+    });
+
+    $(this).closest('tr').remove();
+
+    if(bannedWords.length < 1) {
+      hideWordsTable();
+    }
+  });
+
 };
 
 $(function() {
 
-  var banned = [];
+  // Banned profiles
   chrome.storage.sync.get("banned", function(items) {
     if(_.has(items, "banned")) {
       banned = items.banned;
@@ -51,10 +90,11 @@ $(function() {
 
     if(banned.length > 0) {
       _.each(banned, function(value) {
-        $('.banned-table > tbody:last').append('<tr><td><a href="https://plus.google.com/' + value + '" target="_blank">plus.google.com/' + value + '</a></td><td><button data-profileid="' + value + '" type="button" class="btn btn-success btn-sm unban-btn">Unban</button></td></tr>');
+        $('#banned .banned-table > tbody:last').append('<tr><td><a href="https://plus.google.com/' + value + '" target="_blank">plus.google.com/' + value + '</a></td><td><button data-profileid="' + value + '" type="button" class="btn btn-success btn-sm unban-btn">Unban</button></td></tr>');
       });
 
-      $('.unban-btn').click(function() {
+
+      $('#banned .unban-btn').click(function() {
         banned = _.without(banned, $(this).attr('data-profileid'));
 
         chrome.storage.sync.set({
@@ -62,28 +102,107 @@ $(function() {
         });
 
         if(banned.length > 0) {
-          $(this).closest('tr').hide('slow');
+          $(this).closest('tr').remove();
         }
         else {
-          hideTable();
+          hideProfilesTable();
         }
 
       });
 
-      $('.unban-all-btn').click(function() {
+
+      $('#banned .unban-all-btn').click(function() {
         if(confirm('You sure?')) {
+          banned = [];
           chrome.storage.sync.set({
-            banned: []
+            banned: banned
           });
 
-          hideTable();
+          $('#banned .banned-table tbody:last tr').remove();
+
+          hideProfilesTable();
         }
       });
 
     }
     else {
-      hideTable();
+      hideProfilesTable();
     }
+  });
+
+  // Banned words
+  chrome.storage.sync.get("bannedWords", function(items) {
+    if(_.has(items, "bannedWords")) {
+      bannedWords = items.bannedWords;
+    }
+
+    if(bannedWords.length > 0) {
+      _.each(bannedWords, function(word) {
+        addWordTableRow(word);
+      });
+    }
+    else {
+      hideWordsTable();
+    }
+
+
+    $('#bannedWords .add-word-btn').click(function() {
+      var wordInputEl = $('#bannedWords .word-text'),
+          word = wordInputEl.val().trim();
+
+      if(word !== "") {
+        if(!_.contains(bannedWords, word)) {
+          bannedWords.push(word);
+
+          chrome.storage.sync.set({
+            bannedWords: bannedWords
+          });
+
+          addWordTableRow(word);
+
+          if(bannedWords.length <= 1) {
+            showWordsTable();
+          }
+
+        }
+        else {
+          alert('Word already exists.');
+        }
+
+        wordInputEl.val('');
+      }
+    });
+
+
+    $('#bannedWords .unban-all-btn').click(function() {
+      if(confirm('You sure?')) {
+        bannedWords = [];
+        chrome.storage.sync.set({
+          bannedWords: bannedWords
+        });
+
+        $('#bannedWords .bannedWords-table tbody:last tr').remove();
+
+        hideWordsTable();
+      }
+    });
+
+    $('#bannedWords .word-text').keyup(function(e) {
+      if(event.keyCode == 13) {
+        $('#bannedWords .add-word-btn').click();
+      }
+    });
+
+  });
+
+  $("form").on('submit',function(e) {
+      e.preventDefault();
+  });
+
+  $('a[data-toggle="tab"]').on('click', function() {
+    setTimeout(function() {
+      $('#bannedWords .word-text').focus();
+    }, 200);
   });
 
 });

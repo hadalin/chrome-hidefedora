@@ -27,7 +27,8 @@
 
 					<ul class="nav nav-tabs" role="tablist">
 				    	<li role="presentation" class="active"><a href="#options" aria-controls="options" role="tab" data-toggle="tab">Options</a></li>
-						<li role="presentation"><a href="#banned" aria-controls="banned" role="tab" data-toggle="tab">Banned</a></li>
+						<li role="presentation"><a href="#banned" aria-controls="banned" role="tab" data-toggle="tab">Banned Profiles</a></li>
+						<li role="presentation"><a href="#bannedWords" aria-controls="bannedWords" role="tab" data-toggle="tab">Banned Words</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -58,7 +59,7 @@
 
 						<div role="tabpanel" class="tab-pane" id="banned">
 
-							<div class="row ban-all-container">
+							<div class="row unban-all-container">
 								<div class="col-xs-12">
 
 									<div class="pull-right"><button type="button" class="btn btn-default btn-xs unban-all-btn">Unban All</button></div>
@@ -80,7 +81,7 @@
 										</tbody>
 									</table>
 
-									<span id="empty-notice"><em>No banned profiles.</em></span>
+									<span class="empty-notice"><em>No banned profiles.</em></span>
 
 								</div>
 							</div>
@@ -96,6 +97,61 @@
 							</div>
 
 						</div>
+
+						<div role="tabpanel" class="tab-pane" id="bannedWords">
+
+							<div class="row unban-all-container">
+								<div class="col-xs-12">
+
+									<div class="pull-right"><button type="button" class="btn btn-default btn-xs unban-all-btn">Unban All</button></div>
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12">
+
+									<table class="table table-hover table-condensed bannedWords-table">
+										<thead>
+											<tr>
+												<th>Word or phrase</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+
+									<span class="empty-notice"><em>No banned words.</em></span>
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12">
+
+									<form role="form" class="form-inline">
+										<div class="form-group">
+											<input type="text" class="form-control word-text" placeholder="Word or phrase" maxlength="80" />
+											<button type="button" class="btn btn-default add-word-btn">Add</button>
+										</div>
+									</form>
+								</div>
+							</div>
+
+
+							<hr />
+
+							<div class="row">
+								<div class="col-xs-12">
+
+									<p class="pull-right"><small>Banned words or phrases that will get the comment removed. Examples: <em>le reddit</em>, <em>m'lady</em>, <em>r/</em></small></p>
+
+								</div>
+							</div>
+
+						</div>
+
 					</div>
 
 				</div>
