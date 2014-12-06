@@ -4,12 +4,18 @@ var fedoras = [],
 	banned = [],
 	bannedWords = [];
 
-chrome.storage.sync.get(["removalMethod", "showReportButton", "banned", "bannedWords"], function(items) {
+chrome.storage.sync.get(["removalMethod", "showReportButton"], function(items) {
 	if(_.has(items, "removalMethod")) {
 		removalMethod = items.removalMethod;
 	}
 	if(_.has(items, "showReportButton")) {
 		showReportButton = items.showReportButton;
+	}
+});
+
+chrome.storage.local.get(["fedoras", "banned", "bannedWords"], function(items) {
+	if(_.has(items, "fedoras")) {
+		fedoras = items.fedoras;
 	}
 	if(_.has(items, "banned")) {
 		banned = items.banned;
@@ -19,24 +25,18 @@ chrome.storage.sync.get(["removalMethod", "showReportButton", "banned", "bannedW
 	}
 });
 
-chrome.storage.local.get("fedoras", function(items) {
-	if(_.has(items, "fedoras")) {
-		fedoras = items.fedoras;
-	}
-});
-
 var randomInt = function(min, max) {
     return Math.floor(Math.random()*(max-min+1)+min);
 };
 
 var localBan = function(profileId) {
 	if(!_.contains(banned, profileId)) {
-		chrome.storage.sync.get("banned", function(items) {
+		chrome.storage.local.get("banned", function(items) {
 			if(_.has(items, "banned")) {
 				banned = items.banned;
 			}
 			banned.push(profileId);
-		    chrome.storage.sync.set({
+		    chrome.storage.local.set({
 		      banned: banned
 		    });
 		});

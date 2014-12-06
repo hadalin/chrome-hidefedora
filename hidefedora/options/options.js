@@ -67,7 +67,7 @@ var addWordTableRow = function(word) {
     var word = $(this).data('word');
     bannedWords = _.without(bannedWords, word);
 
-    chrome.storage.sync.set({
+    chrome.storage.local.set({
       bannedWords: bannedWords
     });
 
@@ -83,7 +83,7 @@ var addWordTableRow = function(word) {
 $(function() {
 
   // Banned profiles
-  chrome.storage.sync.get("banned", function(items) {
+  chrome.storage.local.get("banned", function(items) {
     if(_.has(items, "banned")) {
       banned = items.banned;
     }
@@ -97,7 +97,7 @@ $(function() {
       $('#banned .unban-btn').click(function() {
         banned = _.without(banned, $(this).attr('data-profileid'));
 
-        chrome.storage.sync.set({
+        chrome.storage.local.set({
           banned: banned
         });
 
@@ -114,7 +114,7 @@ $(function() {
       $('#banned .unban-all-btn').click(function() {
         if(confirm('You sure?')) {
           banned = [];
-          chrome.storage.sync.set({
+          chrome.storage.local.set({
             banned: banned
           });
 
@@ -131,7 +131,7 @@ $(function() {
   });
 
   // Banned words
-  chrome.storage.sync.get("bannedWords", function(items) {
+  chrome.storage.local.get("bannedWords", function(items) {
     if(_.has(items, "bannedWords")) {
       bannedWords = items.bannedWords;
     }
@@ -154,7 +154,7 @@ $(function() {
         if(!_.contains(bannedWords, word)) {
           bannedWords.push(word);
 
-          chrome.storage.sync.set({
+          chrome.storage.local.set({
             bannedWords: bannedWords
           });
 
@@ -177,7 +177,7 @@ $(function() {
     $('#bannedWords .unban-all-btn').click(function() {
       if(confirm('You sure?')) {
         bannedWords = [];
-        chrome.storage.sync.set({
+        chrome.storage.local.set({
           bannedWords: bannedWords
         });
 
