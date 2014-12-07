@@ -44,7 +44,7 @@ var localBan = function(profileId) {
 };
 
 var getParentUrl = function() {
-	var isInIFrame = (parent === window),
+	var isInIFrame = (parent !== window),
         parentUrl = null;
 
     if(isInIFrame) {
