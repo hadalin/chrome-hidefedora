@@ -43,14 +43,26 @@ var localBan = function(profileId) {
 	}
 };
 
+var getParentUrl = function() {
+	var isInIFrame = (parent === window),
+        parentUrl = null;
+
+    if(isInIFrame) {
+        parentUrl = document.referrer;
+    }
+
+    return parentUrl;
+};
+
 var submitReport = function(profileId, comment) {
 	$.ajax({
-		url: 'https://jhvisser.com/hidefedora/index.php',
+		url: 'https://jhvisser.com/hidefedora/html/submit/submit.php',
 		type: 'POST',
 		data: {
 			submit: 1,
 			profileUrl: profileId,
-			comment: comment
+			comment: comment,
+			youtubeUrl: getParentUrl()
 		}
 	});
 };
