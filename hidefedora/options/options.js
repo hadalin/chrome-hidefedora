@@ -39,6 +39,21 @@ document.getElementById('show-report-button').addEventListener('change', save_sh
 var banned = [],
     bannedWords = [];
 
+var entityMap = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': '&quot;',
+  "'": '&#39;',
+  "/": '&#x2F;'
+};
+
+var escapeHtml = function(string) {
+  return String(string).replace(/[&<>"'\/]/g, function(s) {
+    return entityMap[s];
+  });
+};
+
 var hideProfilesTable = function() {
   $('#banned .banned-table').hide();
   $('#banned .unban-all-container').hide();
@@ -148,7 +163,7 @@ $(function() {
 
     $('#bannedWords .add-word-btn').click(function() {
       var wordInputEl = $('#bannedWords .word-text'),
-          word = wordInputEl.val().trim();
+          word = escapeHtml(wordInputEl.val().trim());
 
       if(word !== "") {
         if(!_.contains(bannedWords, word)) {
