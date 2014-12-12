@@ -21,7 +21,7 @@
       ],
       "js": [
         "assets/jquery/jquery.min.js",
-        "assets/underscore/underscore.js",
+        "assets/underscore/underscore-min.js",
         "src/content.js"
       ]
     }
