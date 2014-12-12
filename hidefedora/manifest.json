@@ -5,7 +5,7 @@
   "description": "Removes fedora Youtube commenters.",
   "homepage_url": "http://hidefedora.hadal.in",
   "icons": {
-    "48": "icons/icon48.png"
+    "48": "icons/icon48-text.png"
   },
   "content_scripts": [
     {
