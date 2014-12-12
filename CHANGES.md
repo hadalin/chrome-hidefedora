@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.6.3
+    * Bugfix: escape HTML in options.
   * v1.6.1
     * Sending Youtube URL as well when reporting a profile.
   * v1.6.0
