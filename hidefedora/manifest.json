@@ -5,7 +5,7 @@
   "description": "Removes fedora Youtube commenters.",
   "homepage_url": "http://www.github.com/hadalin/chrome-hidefedora",
   "icons": {
-    "48": "icons/icon48.png"
+    "48": "icons/icon48-text.png"
   },
   "content_scripts": [
     {
