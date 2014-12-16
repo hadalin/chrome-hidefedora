@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.6.4
+    * Update options footer text.
   * v1.6.3
     * Bugfix: escape HTML in options.
   * v1.6.1
