@@ -187,10 +187,10 @@ $(function() {
 			execute();
 
 	    	counter++;
-	    	if(counter === 8) {
+	    	if(counter === 24) {
 	        	clearInterval(interval);
 	    	}
-		}, 1000);
+		}, 250);
 	}
 
 });
