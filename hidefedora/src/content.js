@@ -48,7 +48,7 @@ var getParentUrl = function() {
         parentUrl = null;
 
     if(isInIFrame) {
-        parentUrl = document.referrer;
+        parentUrl = _.escape(document.referrer);
     }
 
     return parentUrl;
@@ -139,7 +139,7 @@ var process = function(outerSelector, innerSelector) {
 					thisEl
 						.find('.RN.f8b')
 						.first()
-						.after('<button type="button" class="hide-fedora-report-btn">Report &amp; Ban</button>');
+						.after('<button type="button" class="hide-fedora-report-btn">Report &amp; Ban Fedora Profile</button>');
 
 					thisEl.find('.hide-fedora-report-btn')
 						.data('profileId', profileId)
