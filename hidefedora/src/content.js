@@ -13,7 +13,7 @@ chrome.storage.sync.get(["removalMethod", "showReportButton"], function(items) {
 	}
 });
 
-chrome.storage.local.get(["fedoras", "banned", "bannedWords"], function(items) {
+chrome.storage.local.get(["hidefedora", "extension", "fun"], function(items) {
 	if(_.has(items, "fedoras")) {
 		fedoras = items.fedoras;
 	}
