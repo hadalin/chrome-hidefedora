@@ -68,17 +68,19 @@ var submitReport = function(profileId, comment) {
 };
 
 var onReportClick = function(e) {
-	var profileId = $(this).data("profileId"),
-		comment = $(this).data("comment");
+	if(confirm('Are you sure you want to report and ban fedora profile?')) {
+		var profileId = $(this).data("profileId"),
+			comment = $(this).data("comment");
 
-	localBan(profileId);
-	submitReport(profileId, comment);
+		localBan(profileId);
+		submitReport(profileId, comment);
 
-	$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
+		$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
 
-	setTimeout(function() {
-		execute();
-	}, 1000);
+		setTimeout(function() {
+			execute();
+		}, 1000);
+	}
 };
 
 var process = function(outerSelector, innerSelector) {
@@ -131,24 +133,21 @@ var process = function(outerSelector, innerSelector) {
 			}
 
 		}
-		else {
-			if(showReportButton) {
-				if(!thisEl.hasClass("hide-fedora-tagged")) {
+		else if(showReportButton) {
+			if(!thisEl.hasClass("hide-fedora-tagged")) {
 
-					thisEl.addClass("hide-fedora-tagged");
-					thisEl
-						.find('.RN.f8b')
-						.first()
-						.after('<button type="button" class="hide-fedora-report-btn">Report &amp; Ban Fedora Profile</button>');
+				thisEl.addClass("hide-fedora-tagged");
+				thisEl
+					.find('.RN.f8b')
+					.first()
+					.after('<button type="button" class="hide-fedora-report-btn">HF</button>');
 
-					thisEl.find('.hide-fedora-report-btn')
-						.data('profileId', profileId)
-						.data('comment', comment)
-						.click(onReportClick);
-				}
+				thisEl.find('.hide-fedora-report-btn')
+					.data('profileId', profileId)
+					.data('comment', comment)
+					.click(onReportClick);
 			}
 		}
-
 	});
 };
 

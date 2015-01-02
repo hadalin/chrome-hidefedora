@@ -3,6 +3,10 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.6.7
+    * Bugfix: banned words didn't work if the phrase contained certain characters like ```/```.
+    * Added confirmation when submitting a report.
+    * Changed report button layout.
   * v1.6.6
     * Changed Report button text and escaping youtube URL.
   * v1.6.5
