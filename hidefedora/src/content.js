@@ -91,7 +91,7 @@ var process = function(outerSelector, innerSelector) {
 		if(_.contains(fedoras, profileId) || 
 			_.contains(banned, profileId) || 
 			_.some(bannedWords, function(word) { 
-				return comment.toLowerCase().indexOf(word.toLowerCase()) > -1; 
+				return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1; 
 			})) {
 
 			switch(removalMethod) {
