@@ -91,6 +91,7 @@ var process = function(outerSelector, innerSelector) {
 			thisEl = $(this);
 
 		if(!thisEl.hasClass("hide-fedora-tagged")) {
+			thisEl.addClass("hide-fedora-tagged");
 
 			if(_.contains(fedoras, profileId) || 
 				_.contains(banned, profileId) || 
@@ -105,32 +106,27 @@ var process = function(outerSelector, innerSelector) {
 						break;
 					// Replace
 					case "replace-fedora-cat":
-						if(!thisEl.hasClass("hide-fedora-found")) {
+						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
-							thisEl.addClass("hide-fedora-found");
-
-							var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
-
-							// Title
-							el.find(".Ub.gna")
-								.html("Replaced with a cat")
-								.parent()
-								.removeAttr('oid')
-								.attr("href", fileUrl);
-							// Text
-							el.find(".Ct").html("Meow meow");
-							// Img
-							el.find(".Uk.vKa")
-								.removeAttr('oid')
-								.attr("src", "")
-								.attr("src", fileUrl)
-								.parent()
-								.attr("href", fileUrl);
-							// Controls
-							el.find(".REa.Sea").remove();
-							// Replies
-							el.find(".Cx.fr").remove();
-						}
+						// Title
+						el.find(".Ub.gna")
+							.html("Replaced with a cat")
+							.parent()
+							.removeAttr('oid')
+							.attr("href", fileUrl);
+						// Text
+						el.find(".Ct").html("Meow meow");
+						// Img
+						el.find(".Uk.vKa")
+							.removeAttr('oid')
+							.attr("src", "")
+							.attr("src", fileUrl)
+							.parent()
+							.attr("href", fileUrl);
+						// Controls
+						el.find(".REa.Sea").remove();
+						// Replies
+						el.find(".Cx.fr").remove();
 						break;
 				}
 			}
@@ -145,8 +141,6 @@ var process = function(outerSelector, innerSelector) {
 					.data('comment', comment)
 					.click(onReportClick);
 			}
-
-			thisEl.addClass("hide-fedora-tagged");
 		}
 	});
 };
