@@ -90,22 +90,23 @@ var process = function(outerSelector, innerSelector) {
 			comment = el.find('div.Ct').first().text(),
 			thisEl = $(this);
 
-		if(!thisEl.hasClass("hide-fedora-tagged")) {
-			thisEl.addClass("hide-fedora-tagged");
+		if(_.contains(fedoras, profileId) || 
+			_.contains(banned, profileId) || 
+			_.some(bannedWords, function(word) { 
+				return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1; 
+			})) {
 
-			if(_.contains(fedoras, profileId) || 
-				_.contains(banned, profileId) || 
-				_.some(bannedWords, function(word) { 
-					return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1; 
-				})) {
+			switch(removalMethod) {
+				// Hide
+				case "hide":
+					thisEl.remove();
+					break;
+				// Replace
+				case "replace-fedora-cat":
+					if(!thisEl.hasClass("hide-fedora-found")) {
 
-				switch(removalMethod) {
-					// Hide
-					case "hide":
-						thisEl.remove();
-						break;
-					// Replace
-					case "replace-fedora-cat":
+						thisEl.addClass("hide-fedora-found");
+
 						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
 						// Title
@@ -127,20 +128,22 @@ var process = function(outerSelector, innerSelector) {
 						el.find(".REa.Sea").remove();
 						// Replies
 						el.find(".Cx.fr").remove();
-						break;
-				}
+					}
+					break;
 			}
-			else if(showReportButton) {
-				thisEl
-					.find('.RN.f8b')
-					.first()
-					.after('<button type="button" class="hide-fedora-report-btn">HF</button>');
 
-				thisEl.find('.hide-fedora-report-btn')
-					.data('profileId', profileId)
-					.data('comment', comment)
-					.click(onReportClick);
-			}
+		}
+		else if(showReportButton && !thisEl.hasClass("hide-fedora-tagged")) {
+			thisEl.addClass("hide-fedora-tagged");
+			thisEl
+				.find('.RN.f8b')
+				.first()
+				.after('<button type="button" class="hide-fedora-report-btn">HF</button>');
+
+			thisEl.find('.hide-fedora-report-btn')
+				.data('profileId', profileId)
+				.data('comment', comment)
+				.click(onReportClick);
 		}
 	});
 };

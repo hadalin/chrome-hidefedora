@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.6.9
+    * Bugfix: remove comment after reporting.
   * v1.6.8
     * Minor performance improvement.
   * v1.6.7
