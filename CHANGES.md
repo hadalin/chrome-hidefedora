@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.6.8
+    * Minor performance improvement.
   * v1.6.7
     * Bugfix: banned words didn't work if the phrase contained certain characters like ```/```.
     * Added confirmation when submitting a report.

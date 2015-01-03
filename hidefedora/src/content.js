@@ -90,53 +90,51 @@ var process = function(outerSelector, innerSelector) {
 			comment = el.find('div.Ct').first().text(),
 			thisEl = $(this);
 
-		if(_.contains(fedoras, profileId) || 
-			_.contains(banned, profileId) || 
-			_.some(bannedWords, function(word) { 
-				return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1; 
-			})) {
+		if(!thisEl.hasClass("hide-fedora-tagged")) {
 
-			switch(removalMethod) {
-				// Hide
-				case "hide":
-					thisEl.remove();
-					break;
-				// Replace
-				case "replace-fedora-cat":
-					if(!thisEl.hasClass("hide-fedora-found")) {
+			if(_.contains(fedoras, profileId) || 
+				_.contains(banned, profileId) || 
+				_.some(bannedWords, function(word) { 
+					return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1; 
+				})) {
 
-						thisEl.addClass("hide-fedora-found");
+				switch(removalMethod) {
+					// Hide
+					case "hide":
+						thisEl.remove();
+						break;
+					// Replace
+					case "replace-fedora-cat":
+						if(!thisEl.hasClass("hide-fedora-found")) {
 
-						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
+							thisEl.addClass("hide-fedora-found");
 
-						// Title
-						el.find(".Ub.gna")
-							.html("Replaced with a cat")
-							.parent()
-							.removeAttr('oid')
-							.attr("href", fileUrl);
-						// Text
-						el.find(".Ct").html("Meow meow");
-						// Img
-						el.find(".Uk.vKa")
-							.removeAttr('oid')
-							.attr("src", "")
-							.attr("src", fileUrl)
-							.parent()
-							.attr("href", fileUrl);
-						// Controls
-						el.find(".REa.Sea").remove();
-						// Replies
-						el.find(".Cx.fr").remove();
-					}
-					break;
+							var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
+
+							// Title
+							el.find(".Ub.gna")
+								.html("Replaced with a cat")
+								.parent()
+								.removeAttr('oid')
+								.attr("href", fileUrl);
+							// Text
+							el.find(".Ct").html("Meow meow");
+							// Img
+							el.find(".Uk.vKa")
+								.removeAttr('oid')
+								.attr("src", "")
+								.attr("src", fileUrl)
+								.parent()
+								.attr("href", fileUrl);
+							// Controls
+							el.find(".REa.Sea").remove();
+							// Replies
+							el.find(".Cx.fr").remove();
+						}
+						break;
+				}
 			}
-
-		}
-		else if(showReportButton) {
-			if(!thisEl.hasClass("hide-fedora-tagged")) {
-
-				thisEl.addClass("hide-fedora-tagged");
+			else if(showReportButton) {
 				thisEl
 					.find('.RN.f8b')
 					.first()
@@ -147,6 +145,8 @@ var process = function(outerSelector, innerSelector) {
 					.data('comment', comment)
 					.click(onReportClick);
 			}
+
+			thisEl.addClass("hide-fedora-tagged");
 		}
 	});
 };
