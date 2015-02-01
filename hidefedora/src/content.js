@@ -172,11 +172,11 @@ chrome.storage.local.get("lastJSONUpdate", function(items) {
 			now = moment();
 
 		if(moment(lastJSONUpdate).add(TIME_PERIOD_CHECK_HOURS, 'hours').isBefore(now)) {
-			fetchJSON(now.toDate.toString());
+			fetchJSON(now.toISOString());
 		}
 	}
 	else {
-		fetchJSON(Date().toString());
+		fetchJSON(new Date().toISOString());
 	}
 });
 

@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.7.1
+    * Minor improvement.
   * v1.7.0
     * Fetching JSON every couple of hours to reduce server load.
   * v1.6.9
