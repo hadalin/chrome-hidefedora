@@ -1,4 +1,6 @@
-var fedoras = [],
+var TIME_PERIOD_CHECK_HOURS = 3,
+	JSON_URL = 'https://jhvisser.com/hidefedora/getJSON.php',
+	fedoras = [],
 	removalMethod = 'hide',
 	showReportButton = true,
 	banned = [],
@@ -153,11 +155,29 @@ var execute = function() {
 	process(".Ik.Wv", ".fR > a");
 };
 
-$.getJSON("https://jhvisser.com/hidefedora/getJSON.php", function(res) {
-	fedoras = res.fedoras;
-    chrome.storage.local.set({
-      fedoras: res.fedoras
-    });
+
+var fetchJSON = function(dateString) {
+	$.getJSON(JSON_URL, function(res) {
+		fedoras = res.fedoras;
+	    chrome.storage.local.set({
+	      fedoras: res.fedoras,
+	      lastJSONUpdate: dateString
+	    });
+	});
+};
+
+chrome.storage.local.get("lastJSONUpdate", function(items) {
+	if(_.has(items, "lastJSONUpdate")) {
+		var lastJSONUpdate = items.lastJSONUpdate,
+			now = moment();
+
+		if(moment(lastJSONUpdate).add(TIME_PERIOD_CHECK_HOURS, 'hours').isBefore(now)) {
+			fetchJSON(now.toDate.toString());
+		}
+	}
+	else {
+		fetchJSON(Date().toString());
+	}
 });
 
 
