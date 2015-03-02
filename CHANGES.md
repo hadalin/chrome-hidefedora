@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.7.2
+    * Changed server endpoints.
   * v1.7.1
     * Minor improvement.
   * v1.7.0
