@@ -1,4 +1,4 @@
-var TIME_PERIOD_CHECK_HOURS = 3,
+var TIME_PERIOD_CHECK_HOURS = 1,
 	JSON_URL = 'https://jhvisser.com/hidefedora/reports/profiles.json',
 	fedoras = [],
 	removalMethod = 'hide',
@@ -64,7 +64,7 @@ var submitReport = function(profileId, comment) {
 			submit: 1,
 			profileUrl: profileId,
 			comment: comment,
-			youtubeUrl: getParentUrl()
+			youtubeUrl: window.location.href
 		}
 	});
 };
@@ -85,11 +85,11 @@ var onReportClick = function(e) {
 	}
 };
 
-var process = function(outerSelector, innerSelector) {
+var process = function(outerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
-			profileId = el.find('[oid]').first().attr('oid'),
-			comment = el.find('div.Ct').first().text(),
+			profileId = el.attr('data-aid'),
+			comment = el.find('.comment-text-content').first().text(),
 			thisEl = $(this);
 
 		if(_.contains(fedoras, profileId) || 
@@ -112,24 +112,23 @@ var process = function(outerSelector, innerSelector) {
 						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
 						// Title
-						el.find(".Ub.gna")
+						el.find(".user-name")
 							.html("Replaced with a cat")
-							.parent()
-							.removeAttr('oid')
+							.removeAttr('data-ytid')
 							.attr("href", fileUrl);
 						// Text
-						el.find(".Ct").html("Meow meow");
+						el.find(".comment-text-content").html("Meow meow");
 						// Img
-						el.find(".Uk.vKa")
-							.removeAttr('oid')
+						el.find(".user-photo")
 							.attr("src", "")
 							.attr("src", fileUrl)
 							.parent()
-							.attr("href", fileUrl);
+							.attr("href", fileUrl)
+							.removeAttr('data-ytid');
 						// Controls
-						el.find(".REa.Sea").remove();
+						el.find(".comment-footer-actions").remove();
 						// Replies
-						el.find(".Cx.fr").remove();
+						el.siblings().first().remove();
 					}
 					break;
 			}
@@ -138,7 +137,7 @@ var process = function(outerSelector, innerSelector) {
 		else if(showReportButton && !thisEl.hasClass("hide-fedora-tagged")) {
 			thisEl.addClass("hide-fedora-tagged");
 			thisEl
-				.find('.RN.f8b')
+				.find('.footer-button-bar')
 				.first()
 				.after('<button type="button" class="hide-fedora-report-btn">HF</button>');
 
@@ -151,8 +150,7 @@ var process = function(outerSelector, innerSelector) {
 };
 
 var execute = function() {
-	process(".Yp.yt.Xa", ".ve.oba.HPa > a");
-	process(".Ik.Wv", ".fR > a");
+	process(".comment-item");
 };
 
 
@@ -183,8 +181,8 @@ chrome.storage.local.get("lastJSONUpdate", function(items) {
 
 $(function() {
 
-	var target = document.querySelector('.yJa');
-	 
+	var target = document.querySelector('#watch-discussion');
+
 	if(target !== null) {
 
 		// Set MutationObserver

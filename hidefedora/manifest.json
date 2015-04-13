@@ -1,6 +1,6 @@
 {
   "name": "Hide Fedora",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "manifest_version": 2,
   "description": "Removes fedora Youtube commenters.",
   "homepage_url": "http://hidefedora.hadal.in",
@@ -10,11 +10,9 @@
   "content_scripts": [
     {
       "matches": [
-        "*://plus.googleapis.com/*",
-        "*://apis.google.com/*",
+        "*://www.youtube.com/*",
         "*://jhvisser.com/hidefedora/*"
       ],
-      "all_frames": true,
       "run_at": "document_end",
       "css": [
         "src/content.css"

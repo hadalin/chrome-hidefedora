@@ -8,7 +8,7 @@
 	padding: 0 2px;
 	padding-bottom: 1px;
 	position: relative;
-	bottom: 2px;
+	bottom: 7px;
 	outline: 0;
 	font-size: 10px;
 	text-decoration: none;
@@ -20,8 +20,7 @@
 	border-radius: 2px;
 }
 
-.ve.oba.HPa:hover .hide-fedora-report-btn,
-.Wi.lg.via:hover .hide-fedora-report-btn {
+.comment-item:hover .hide-fedora-report-btn {
 	visibility: visible;
 }
 
