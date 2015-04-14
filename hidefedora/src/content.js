@@ -101,7 +101,7 @@ var process = function(outerSelector) {
 			switch(removalMethod) {
 				// Hide
 				case "hide":
-					thisEl.remove();
+					thisEl.parent().remove();
 					break;
 				// Replace
 				case "replace-fedora-cat":
