@@ -128,7 +128,7 @@ var process = function(outerSelector) {
 						// Controls
 						el.find(".comment-footer-actions").remove();
 						// Replies
-						el.siblings().first().remove();
+						el.siblings().remove();
 					}
 					break;
 			}

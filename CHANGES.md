@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.7.5
+    * Bugfix: also remove replies when replacing comment
   * v1.7.4
     * Bugfix: replies did not get removed.
   * v1.7.3
