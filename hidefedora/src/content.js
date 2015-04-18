@@ -101,7 +101,12 @@ var process = function(outerSelector) {
 			switch(removalMethod) {
 				// Hide
 				case "hide":
-					thisEl.parent().remove();
+					if(thisEl.hasClass('reply')) {
+						thisEl.remove();
+					}
+					else {
+						thisEl.closest('.comment-entry').remove();
+					}
 					break;
 				// Replace
 				case "replace-fedora-cat":
@@ -128,7 +133,9 @@ var process = function(outerSelector) {
 						// Controls
 						el.find(".comment-footer-actions").remove();
 						// Replies
-						el.siblings().remove();
+						if(!thisEl.hasClass('reply')) {
+							el.siblings().remove();
+						}
 					}
 					break;
 			}
