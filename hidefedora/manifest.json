@@ -1,9 +1,9 @@
 {
   "name": "Hide Fedora",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "manifest_version": 2,
   "description": "Removes fedora Youtube commenters.",
-  "homepage_url": "http://hidefedora.hadal.in",
+  "homepage_url": "http://hidefedora.hadalin.me",
   "icons": {
     "48": "icons/icon48.png"
   },
