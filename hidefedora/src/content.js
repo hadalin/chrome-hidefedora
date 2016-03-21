@@ -70,7 +70,7 @@ var submitReport = function(profileId, comment) {
 };
 
 var onReportClick = function(e) {
-	if(confirm('Are you sure you want to report and ban fedora profile?')) {
+	if(confirm('Are you sure you want to report and ban this fedora profile?')) {
 		var profileId = $(this).data("profileId"),
 			comment = $(this).data("comment");
 
@@ -88,24 +88,24 @@ var onReportClick = function(e) {
 var process = function(outerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
-			profileId = el.attr('data-aid'),
-			comment = el.find('.comment-text-content').first().text(),
+			profileId = el.attr('data-author-id'),
+			comment = el.find('.comment-renderer-text-content').first().text(),
 			thisEl = $(this);
 
-		if(_.contains(fedoras, profileId) || 
-			_.contains(banned, profileId) || 
-			_.some(bannedWords, function(word) { 
-				return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1; 
+		if(_.contains(fedoras, profileId) ||
+			_.contains(banned, profileId) ||
+			_.some(bannedWords, function(word) {
+				return comment.toLowerCase().indexOf(_.unescape(word.toLowerCase())) > -1;
 			})) {
 
 			switch(removalMethod) {
 				// Hide
 				case "hide":
-					if(thisEl.hasClass('reply')) {
-						thisEl.remove();
+					if(thisEl.parent().hasClass('comment-thread-renderer')) {
+						thisEl.parent().remove();
 					}
 					else {
-						thisEl.closest('.comment-entry').remove();
+						thisEl.remove();
 					}
 					break;
 				// Replace
@@ -117,23 +117,24 @@ var process = function(outerSelector) {
 						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
 						// Title
-						el.find(".user-name")
+						el.find(".comment-author-text")
 							.html("Replaced with a cat")
 							.removeAttr('data-ytid')
 							.attr("href", fileUrl);
 						// Text
-						el.find(".comment-text-content").html("Meow meow");
+						el.find(".comment-renderer-text-content").html("Meow meow");
 						// Img
-						el.find(".user-photo")
+						el.find(".comment-author-thumbnail")
+							.find("img")
 							.attr("src", "")
 							.attr("src", fileUrl)
-							.parent()
+							.closest(".yt-uix-sessionlink")
 							.attr("href", fileUrl)
 							.removeAttr('data-ytid');
 						// Controls
-						el.find(".comment-footer-actions").remove();
+						el.find(".comment-renderer-footer").remove();
 						// Replies
-						if(!thisEl.hasClass('reply')) {
+						if (el.siblings().hasClass('comment-replies-renderer')) {
 							el.siblings().remove();
 						}
 					}
@@ -144,8 +145,10 @@ var process = function(outerSelector) {
 		else if(showReportButton && !thisEl.hasClass("hide-fedora-tagged")) {
 			thisEl.addClass("hide-fedora-tagged");
 			thisEl
-				.find('.footer-button-bar')
+				.find('.comment-renderer-footer')
 				.first()
+				.children()
+				.last()
 				.after('<button type="button" class="hide-fedora-report-btn">HF</button>');
 
 			thisEl.find('.hide-fedora-report-btn')
@@ -157,7 +160,7 @@ var process = function(outerSelector) {
 };
 
 var execute = function() {
-	process(".comment-item");
+	process(".comment-renderer");
 };
 
 
@@ -197,9 +200,9 @@ $(function() {
 		var observer = new MutationObserver(function() {
 			execute();
 		});
-		 
+
 		var config = { childList: true, subtree: true };
-		 
+
 		observer.observe(target, config);
 
 		// Execute removal a couple of times before MutationObserver kicks in
