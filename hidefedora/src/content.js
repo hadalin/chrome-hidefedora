@@ -75,7 +75,7 @@ var onReportClick = function(e) {
 			comment = $(this).data("comment");
 
 		localBan(profileId);
-		//submitReport(profileId, comment);
+		submitReport(profileId, comment);
 
 		$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
 
