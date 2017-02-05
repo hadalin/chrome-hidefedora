@@ -75,7 +75,7 @@ var onReportClick = function(e) {
 			comment = $(this).data("comment");
 
 		localBan(profileId);
-		submitReport(profileId, comment);
+		//submitReport(profileId, comment);
 
 		$(this).prop('disabled', true).html('Reported').addClass('hide-fedora-reported');
 
@@ -88,8 +88,8 @@ var onReportClick = function(e) {
 var process = function(outerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
-			profileId = el.attr('data-author-id'),
-			comment = el.find('.comment-renderer-text-content').first().text(),
+			profileId = el.find('.comment-renderer:first > a').attr('href');
+			comment = el.find('.comment-renderer-text-content:first').text();
 			thisEl = $(this);
 
 		if(_.contains(fedoras, profileId) ||
@@ -101,12 +101,7 @@ var process = function(outerSelector) {
 			switch(removalMethod) {
 				// Hide
 				case "hide":
-					if(thisEl.parent().hasClass('comment-thread-renderer')) {
-						thisEl.parent().remove();
-					}
-					else {
-						thisEl.remove();
-					}
+					thisEl.remove();
 					break;
 				// Replace
 				case "replace-fedora-cat":
@@ -134,9 +129,7 @@ var process = function(outerSelector) {
 						// Controls
 						el.find(".comment-renderer-footer").remove();
 						// Replies
-						if (el.siblings().hasClass('comment-replies-renderer')) {
-							el.siblings().remove();
-						}
+						el.find('.comment-replies-renderer:first').remove();
 					}
 					break;
 			}
@@ -157,7 +150,7 @@ var process = function(outerSelector) {
 };
 
 var execute = function() {
-	process(".comment-renderer");
+	process(".comment-thread-renderer");
 };
 
 

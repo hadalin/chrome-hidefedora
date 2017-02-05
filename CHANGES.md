@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.8.2
+    * Update due to YouTube HTML changes.
   * v1.8.1
     * Bugfix: Fixed button positioning.
   * v1.7.6

@@ -90,7 +90,7 @@ $(function() {
 
     if(banned.length > 0) {
       _.each(banned, function(value) {
-        $('#banned .banned-table > tbody:last').append('<tr><td><a href="https://plus.google.com/' + value + '" target="_blank">plus.google.com/' + value + '</a></td><td><button data-profileid="' + value + '" type="button" class="btn btn-success btn-sm unban-btn">Unban</button></td></tr>');
+        $('#banned .banned-table > tbody:last').append('<tr><td><a href="https://www.youtube.com' + value + '" target="_blank">www.youtube.com' + value + '</a></td><td><button data-profileid="' + value + '" type="button" class="btn btn-success btn-sm unban-btn">Unban</button></td></tr>');
       });
 
 
