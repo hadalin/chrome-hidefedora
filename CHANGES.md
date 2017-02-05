@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.8.1
+    * Bugfix: Fixed button positioning.
   * v1.7.6
     * Bugfix: replies where not removed correctly.
   * v1.7.5

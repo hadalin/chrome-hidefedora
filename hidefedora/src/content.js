@@ -145,11 +145,8 @@ var process = function(outerSelector) {
 		else if(showReportButton && !thisEl.hasClass("hide-fedora-tagged")) {
 			thisEl.addClass("hide-fedora-tagged");
 			thisEl
-				.find('.comment-renderer-footer')
-				.first()
-				.children()
-				.last()
-				.after('<button type="button" class="hide-fedora-report-btn">HF</button>');
+				.find('.comment-renderer-footer .comment-action-buttons-toolbar')
+				.append('<button type="button" class="hide-fedora-report-btn">HF</button>');
 
 			thisEl.find('.hide-fedora-report-btn')
 				.data('profileId', profileId)

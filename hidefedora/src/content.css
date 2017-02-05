@@ -19,6 +19,7 @@
 	vertical-align: middle;
 	cursor: pointer;
 	border-radius: 2px;
+	opacity: 0.4;
 }
 
 .comment-renderer:hover .hide-fedora-report-btn {
