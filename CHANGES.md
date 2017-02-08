@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.8.5
+    * Fix permissions.
   * v1.8.4
     * Updated jquery.
   * v1.8.3

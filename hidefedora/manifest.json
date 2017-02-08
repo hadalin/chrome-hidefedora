@@ -1,6 +1,6 @@
 {
   "name": "Hide Fedora",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "manifest_version": 2,
   "description": "Removes fedora Youtube commenters.",
   "homepage_url": "http://hidefedora.hadalin.me",
@@ -10,8 +10,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.youtube.com/*",
-        "*://jhvisser.com/hidefedora/*"
+        "*://www.youtube.com/*"
       ],
       "run_at": "document_end",
       "css": [
@@ -29,7 +28,9 @@
     "resources/*"
   ],
   "permissions": [
-    "storage"
+    "storage",
+    "https://jhvisser.com/hidefedora/reports",
+    "https://jhvisser.com/hidefedora/reports/profiles.json"
   ],
   "options_page": "options/options.html"
 }
