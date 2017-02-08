@@ -153,7 +153,6 @@ var execute = function() {
 	process(".comment-thread-renderer");
 };
 
-
 var fetchJSON = function(dateString) {
 	$.getJSON(JSON_URL, function(res) {
 		fedoras = res.fedoras;
@@ -178,33 +177,39 @@ chrome.storage.local.get("lastJSONUpdate", function(items) {
 	}
 });
 
-
-$(function() {
-
+var trigger = function() {
 	var target = document.querySelector('#watch-discussion');
 
-	if(target !== null) {
+	if (target === null) return;
 
-		// Set MutationObserver
-		var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-		var observer = new MutationObserver(function() {
-			execute();
-		});
+	// Set MutationObserver
+	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+	var observer = new MutationObserver(function() {
+		execute();
+	});
 
-		var config = { childList: true, subtree: true };
+	var config = { childList: true, subtree: true };
 
-		observer.observe(target, config);
+	observer.observe(target, config);
 
-		// Execute removal a couple of times before MutationObserver kicks in
-		var counter = 0;
-		var interval = setInterval(function() {
-			execute();
+	// Execute removal a couple of times before MutationObserver kicks in
+	var counter = 0;
+	var interval = setInterval(function() {
+		execute();
 
-	    	counter++;
-	    	if(counter === 24) {
-	        	clearInterval(interval);
-	    	}
-		}, 250);
+		counter++;
+		if (counter === 24) {
+			clearInterval(interval);
+		}
+	}, 250);
+};
+
+window.addEventListener('pageshow', function() {
+	trigger();
+});
+
+document.addEventListener('transitionend', function(e) {
+	if (e.target.id === 'progress') {
+		trigger();
 	}
-
 });

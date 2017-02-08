@@ -3,6 +3,8 @@ Changes
 
 List of changes with the latest at the top:
 
+  * v1.8.3
+    * Fixed plugin execution when transitioning to another state.
   * v1.8.2.1
     * Forgot to uncomment some code after done debugging.
   * v1.8.2
