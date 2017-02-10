@@ -88,7 +88,7 @@ var onReportClick = function(e) {
 var process = function(outerSelector) {
 	$(outerSelector).each(function(index, element) {
 		var el = $(element),
-			profileId = el.find('.comment-renderer:first > a').attr('href');
+			profileId = el.find('a').attr('href');
 			comment = el.find('.comment-renderer-text-content:first').text();
 			thisEl = $(this);
 
@@ -101,13 +101,20 @@ var process = function(outerSelector) {
 			switch(removalMethod) {
 				// Hide
 				case "hide":
-					thisEl.remove();
+					var commentThreadRenderer = thisEl.parent('.comment-thread-renderer');
+					if (commentThreadRenderer.length === 0) {
+						thisEl.remove();
+					} else {
+						thisEl.parent('.comment-thread-renderer').remove();
+					}
 					break;
 				// Replace
 				case "replace-fedora-cat":
 					if(!thisEl.hasClass("hide-fedora-found")) {
 
 						thisEl.addClass("hide-fedora-found");
+
+						thisEl.parent().find('.comment-replies-renderer').remove();
 
 						var fileUrl = chrome.extension.getURL('resources/pics/fedora-cats/' + randomInt(1,22) + '.jpg');
 
@@ -150,7 +157,7 @@ var process = function(outerSelector) {
 };
 
 var execute = function() {
-	process(".comment-thread-renderer");
+	process(".comment-renderer");
 };
 
 var fetchJSON = function(dateString) {
